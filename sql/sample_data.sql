@@ -8,7 +8,7 @@ INSERT INTO inspections (
     is_wearing
 )
 SELECT
-    DATE '2026-05-30' + ((g - 1) % 5),
+    DATE '2026-05-20' + ((g - 1) % 15),
     CASE
         WHEN g % 3 = 1 THEN '오전'
         WHEN g % 3 = 2 THEN '점심직후'
@@ -32,7 +32,7 @@ SELECT
         ELSE '장갑'
     END,
     CASE
-        WHEN g % 5 IN (0, 1) THEN false
+        WHEN g % 10 IN (0, 1, 2, 3) THEN false
         ELSE true
     END
-FROM generate_series(1, 100) AS g;
+FROM generate_series(1, 1000) AS g;

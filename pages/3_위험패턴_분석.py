@@ -5,7 +5,7 @@ import requests
 
 st.set_page_config(page_title="위험패턴 분석", page_icon="📊", layout="wide")
 
-API_BASE = "https://ppe-dashboard-backend.onrender.com"
+API_BASE_URL = "http://localhost:8000"
 
 # =========================
 # 1. 스타일 (1페이지와 동일한 칼각 정렬 CSS)
@@ -85,7 +85,7 @@ def render_empty_chart_message(message: str):
 def fetch_analysis_data(params: dict):
     try:
         clean_params = {k: v for k, v in params.items() if v is not None and v != ""}
-        res = requests.get(f"{API_BASE}/analysis/detail", params=clean_params, timeout=60)
+        res = requests.get(f"{API_BASE_URL}/analysis/detail", params=clean_params, timeout=60)
         res.raise_for_status()
         return res.json()
     except Exception as e:
@@ -124,8 +124,8 @@ f1, f2, f3 = st.columns(3)
 f4, f5, f6 = st.columns(3)
 f7, f8 = st.columns([1, 2])
 
-with f1: start_date = st.text_input("시작 날짜", value="2026-03-01")
-with f2: end_date = st.text_input("종료 날짜", value="2026-03-31")
+with f1: start_date = st.text_input("시작 날짜", value="2026-05-30")
+with f2: end_date = st.text_input("종료 날짜", value="2026-06-03")
 with f3: site = st.selectbox("현장", ["", "현장1", "현장2", "현장3"])
 with f4: zone = st.selectbox("작업구역", ["", "고소작업구역", "절단작업구역", "자재운반구역", "설비점검구역"])
 with f5: task_type = st.selectbox("작업유형", ["", "고소작업", "절단작업", "자재운반", "설비점검"])

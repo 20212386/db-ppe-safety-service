@@ -148,19 +148,22 @@ def load_input_logs() -> pd.DataFrame:
     기존 Streamlit 분석 로직이 사용하는 컬럼 구조로 변환한다.
     """
     query = """
-    SELECT
-        inspection_id,
-        date,
-        time_slot,
-        site,
-        zone,
-        worker_name,
-        ppe_type,
-        is_wearing,
-        created_at
-    FROM inspections
-    ORDER BY created_at DESC;
-    """
+SELECT
+    inspection_id,
+    date,
+    time_slot,
+    site,
+    zone,
+    worker_name,
+    ppe_type,
+    is_wearing,
+    task_type,
+    team,
+    note,
+    created_at
+FROM inspections
+ORDER BY created_at DESC;
+"""
 
     db_df = fetch_dataframe(query)
 
@@ -168,21 +171,15 @@ def load_input_logs() -> pd.DataFrame:
         return pd.DataFrame(columns=INPUT_REQUIRED_COLUMNS)
 
     df = pd.DataFrame()
-
+    
     df["date"] = pd.to_datetime(db_df["date"], errors="coerce").dt.strftime("%Y-%m-%d")
     df["time_slot"] = db_df["time_slot"].fillna("").astype(str).str.strip()
     df["site"] = db_df["site"].fillna("").astype(str).str.strip()
     df["zone"] = db_df["zone"].fillna("").astype(str).str.strip()
-
-    # 현재 DB 테이블에는 task_type, team, note가 없으므로 빈 값으로 맞춤
-    df["task_type"] = ""
-    df["team"] = ""
-    df["note"] = ""
-
-    # 기존 로직은 missed_ppe / is_violated 기준으로 분석함
+    df["task_type"] = db_df["task_type"].fillna("").astype(str).str.strip()
+    df["team"] = db_df["team"].fillna("").astype(str).str.strip()
+    df["note"] = db_df["note"].fillna("").astype(str).str.strip()
     df["missed_ppe"] = db_df["ppe_type"].fillna("").astype(str).str.strip()
-
-    # DB: is_wearing=True면 정상, False면 위반
     df["is_violated"] = (~db_df["is_wearing"].astype(bool)).astype(int)
 
     return normalize_input_df(df)
