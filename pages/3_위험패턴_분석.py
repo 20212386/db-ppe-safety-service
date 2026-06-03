@@ -5,7 +5,7 @@ import requests
 
 st.set_page_config(page_title="위험패턴 분석", page_icon="📊", layout="wide")
 
-API_BASE_URL = "http://localhost:8000"
+API_BASE_URL = "https://db-ppe-safety-service.onrender.com"
 
 # =========================
 # 1. 스타일 (1페이지와 동일한 칼각 정렬 CSS)

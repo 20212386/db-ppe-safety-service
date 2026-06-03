@@ -6,7 +6,7 @@ from datetime import date
 
 st.set_page_config(page_title="PPE 안전관리 대시보드", page_icon="🦺", layout="wide")
 
-API_BASE_URL = "http://localhost:8000"
+API_BASE_URL = "https://db-ppe-safety-service.onrender.com"
 
 # =========================
 # API & 유틸

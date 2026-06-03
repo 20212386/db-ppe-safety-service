@@ -5,7 +5,7 @@ import requests
 
 st.set_page_config(page_title="개선 현황", layout="wide")
 
-API_BASE_URL = "http://localhost:8000"
+API_BASE_URL = "https://db-ppe-safety-service.onrender.com"
 
 # =========================
 # API
