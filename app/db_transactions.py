@@ -1,5 +1,8 @@
-from app.database import get_connection
-
+try:
+    from app.database import get_connection
+except ModuleNotFoundError:
+    from database import get_connection
+    
 def insert_inspection_with_transaction(entry: dict) -> None:
     conn = get_connection()
 
