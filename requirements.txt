@@ -23,3 +23,6 @@ requests
 altair==4.2.2
 plotly
 matplotlib
+psycopg2-binary
+python-dotenv
+uvicorn
